@@ -32,10 +32,27 @@ class indumentariamodel {
         return $articulos;
     }
 
-     public function insertararticulo($nombre,$precio,$categoria){
-        $sentencia = $this->db->prepare("INSERT INTO articulos(nombre,precio,id_categoria) VALUES(?,?,?)");
-        $sentencia->execute(array($nombre,$precio,$categoria));
+    public function insertararticulo($nombre,$precio,$categoria,$imagen=null){
+        $filepath = null;
+        if ($imagen)
+            $filepath = $this->moveFile($imagen);
+        $sentencia = $this->db->prepare("INSERT INTO articulos(nombre,precio,id_categoria) VALUES(?,?,?); set @last_id_in_articulos=LAST_INSERT_ID(); INSERT INTO imagenes(id_articulo, path) VALUES(@last_id_in_articulos,?)");
+        $sentencia->execute(array($nombre,$precio,$categoria,$filepath));
     }
+
+    public function getimg($id_articulo){
+        $sentencia = $this->db->prepare("SELECT * FROM imagenes WHERE id_articulo=?");
+        $sentencia->execute(array($id_articulo));
+        $imagenes = $sentencia->fetchAll(PDO::FETCH_OBJ);
+        return $imagenes;
+    }
+    
+    private function moveFile($imagen) {
+        $filepath = "img/articulos/" . uniqid() . "." . strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));  
+        move_uploaded_file($imagen['tmp_name'], $filepath);
+        return $filepath;
+    }
+
 
     public function borrararticulo($id_articulo){
         $sentencia = $this->db->prepare("DELETE FROM articulos WHERE id_articulo=?");

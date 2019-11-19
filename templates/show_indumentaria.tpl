@@ -23,10 +23,11 @@
                 {/if}</li>
             {/foreach}
             
-        <form action="insertar" method="post">
+        <form action="insertar" method="post" enctype="multipart/form-data">
             Inserte articulos: 
             <input type="text" name="nombre" placeholder="Nombre">
             <input type="number" name="precio" placeholder= "Precio" max="30000">
+            imagen(opcional):<input type="file" name="imagen" id="">
             <select name="categoria">
                 {foreach from=$lista_categorias item=categorias}
                     <option value="{$categorias->id_categoria}">{$categorias->nombre}</option>
