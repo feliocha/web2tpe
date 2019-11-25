@@ -67,10 +67,6 @@ class usercontroller {
     }
 
     public function EntrarComoInvitado(){
-        session_start();
-        if (!isset($_SESSION['userId'])) {
-            $_SESSION['adm'] = 3;
-        }
         $mfindumentaria = $this->modelindumentaria->getarticulos();
         $cat = $this->modelcat->getcategorias();
         $this->view->ingresarinvitado($mfindumentaria, $cat);
@@ -78,9 +74,21 @@ class usercontroller {
 
     public function mostrararticuloguest($id_articulo){
         
+        session_start();
+        if (!isset($_SESSION['adm'])) {
+            $usuario = 3;
+        }else {
+            $usuario = 0;
+        }
+
+        if (isset($_SESSION['user'])) {
+            $usuarioname = $_SESSION['user'];
+        }else {
+            $usuarioname = "invitado";
+        }
+       
         $mfindumentaria = $this->modelindumentaria->getarticulo($id_articulo);
-        $usuario = $_SESSION['adm'];
-        $this->view->mostrararticuloguest($mfindumentaria,$usuario);
+        $this->view->mostrararticuloguest($mfindumentaria,$usuario,$usuarioname);
     }
 
     public function mostrarcategoriaguest($id_categoria){

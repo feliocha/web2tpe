@@ -3,6 +3,7 @@
 abstract class ApiController {
     protected $modelcat;
     protected $modelindumentaria;
+    protected $modelcomentarios;
     protected $view;
     private $data; 
 
@@ -11,6 +12,7 @@ abstract class ApiController {
         $this->data = file_get_contents("php://input"); 
         $this->modelindumentaria = new indumentariamodel();
         $this->modelcat = new categoriasmodel();
+        $this->modelcomentarios = new comentariosmodel();
     }
 
     function getData(){ 

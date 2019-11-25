@@ -1,14 +1,58 @@
 <?php
 require_once("./models/indumentariamodel.php");
 require_once("./models/categoriasmodel.php");
+require_once("./models/comentariosmodel.php");
 require_once("./api/ApiController.php");
 require_once("./api/JSONView.php");
 
 class IndumentariaApiController extends ApiController{
-  
+    
     public function getindumentaria($params = null) {
         $mfindumentaria = $this->modelindumentaria->getarticulos();
         $this->view->response($mfindumentaria, 200);
+    }
+    
+    public function getcomentarios($params = null) {
+        $comentarios = $this->modelcomentarios->getcomentarios();
+        $this->view->response($comentarios, 200);
+    } 
+    
+    public function getcomentariospromedio($params = null) {
+        $id = $params[':ID'];
+        
+        $promedio = $this->modelcomentarios->getcomentariospromedio($id);
+        $this->view->response($promedio, 200);
+    }
+    
+    public function getcomentariosart($params = null) {
+        // obtiene el parametro de la ruta
+        $id = $params[':ID'];
+        
+        $comentarios = $this->modelcomentarios->getcomentariosart($id);
+        
+        if ($comentarios) {
+            $this->view->response($comentarios, 200);   
+        } else {
+            $this->view->response("No existe", 404);
+        }
+    }
+
+    public function insertarcomentario($params = []) {     
+        $body = $this->getData();
+
+        // inserta la tarea
+        $id_articulo = $body->id_articulo;
+        $usuario = $body->usuario;
+        $texto = $body->texto;
+        $calificacion = $body->calificacion;
+        $comentario = $this->modelcomentarios->insertarcomentario($id_articulo,$usuario,$texto,$calificacion);
+    }
+
+    public function borrarcomentario($params = []) {
+        $id = $params[':ID'];
+                    //traer un comentario y chekear
+            $this->modelcomentarios->borrarcomentario($id);
+            $this->view->response("comentario=$id eliminado con éxito", 200);
     }
 
     /**
@@ -69,6 +113,7 @@ class IndumentariaApiController extends ApiController{
         else 
             $this->view->response("articulo id=$id not found", 404);
     }
+
 
 
 }
