@@ -6,7 +6,9 @@
         
         <li>Precio: ${$articulo->precio}</li>
 
-
+        {foreach from=$imagenes item=img}
+            <img src="{$img->path}" alt="" height="15%" width="15%">
+        {/foreach}
 
 
         <div id=divcomentarios data-adm={$user} data-id={$articulo->id_articulo}>  

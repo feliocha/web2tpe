@@ -29,13 +29,14 @@ class indumentariaview {
         $smarty->display('templates/show_categoria.tpl');
     }
 
-    public function displayarticulo($user,$mfindumentaria){
+    public function displayarticulo($user,$mfindumentaria,$imagenes){
        
         $smarty = new Smarty();
         $smarty->assign('user',$user);
         $smarty->assign('titulo',"mfindumentaria");
         $smarty->assign('BASE_URL',BASE_URL);
         $smarty->assign('articulo',$mfindumentaria);
+        $smarty->assign('imagenes',$imagenes);
         $smarty->display('templates/show_articulo.tpl');
     }
 }

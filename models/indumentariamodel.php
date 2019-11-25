@@ -40,6 +40,20 @@ class indumentariamodel {
         $sentencia->execute(array($nombre,$precio,$categoria,$filepath));
     }
 
+    
+    private function moveFile($imagen) {
+        $filepath = "img/articulos/" . uniqid() . "." . strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));  
+        move_uploaded_file($imagen['tmp_name'], $filepath);
+        return $filepath;
+    }
+
+    public function getimg($id_articulo){
+        $sentencia = $this->db->prepare("SELECT * FROM imagenes WHERE id_articulo=?");
+        $sentencia->execute(array($id_articulo));
+        $imagenes = $sentencia->fetchAll(PDO::FETCH_OBJ);
+        return $imagenes;
+    }
+
     public function borrararticulo($id_articulo){
         $sentencia = $this->db->prepare("DELETE FROM articulos WHERE id_articulo=?");
         $sentencia->execute(array($id_articulo));

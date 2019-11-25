@@ -43,14 +43,26 @@
         public function getarticulo($id_articulo){
             $this->checkLogIn();
             $user= $_SESSION['adm'];
-
+            $imagenes = $this->modelindumentaria->getimg($id_articulo);
             $mfindumentaria = $this->modelindumentaria->getarticulo($id_articulo);
-            $this->view->displayarticulo($user,$mfindumentaria);
+            $this->view->displayarticulo($user,$mfindumentaria,$imagenes);
         }
 
         public function insertararticulo(){
             $this->checkLogIn();
-            $this->modelindumentaria->insertararticulo($_POST['nombre'], $_POST['precio'], $_POST['categoria']);
+            if ($_FILES['imagen']['name']) {
+                if ($_FILES['imagen']['type'] == "image/jpeg" || $_FILES['imagen']['type'] == "image/jpg" || $_FILES['imagen']['type'] == "image/png") {
+                    $this->modelindumentaria->insertararticulo($_POST['nombre'], $_POST['precio'], $_POST['categoria'], $_FILES['imagen']);
+                }
+                else {
+                    $error = "Formato no aceptado";
+                    var_dump($error);
+                    die();
+                }
+            }
+            else {
+                $this->modelindumentaria->insertararticulo($_POST['nombre'], $_POST['precio'], $_POST['categoria']);
+            }
             header("Location: " . BASE_URL);
         }
         
