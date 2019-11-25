@@ -42,8 +42,10 @@
         
         public function getarticulo($id_articulo){
             $this->checkLogIn();
+            $user= $_SESSION['adm'];
+
             $mfindumentaria = $this->modelindumentaria->getarticulo($id_articulo);
-            $this->view->displayarticulo($mfindumentaria);
+            $this->view->displayarticulo($user,$mfindumentaria);
         }
 
         public function insertararticulo(){

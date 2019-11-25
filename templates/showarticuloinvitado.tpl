@@ -14,12 +14,11 @@
                     sos invitado no podes agregar nada                      
                     {/if}
                     
-                    <div id=divcomentarios data-user={$nombreusuario} data-id={$articulo->id_articulo}>  
+                    <div id=divcomentarios data-adm={$user} data-user={$nombreusuario} data-id={$articulo->id_articulo}>  
                         
-                        <!-- <ul id="comentarios">-->
 
-                        <!-- </ul>-->
                         {include file="./vue/comentarios_vue.tpl"}
+                        
                         <form id="form-comentario" action="insertar" method="post">
                             <input type="text" name="texto" placeholder="escriba aqui">
                             <input type="number" name="calificacion"  max="10">

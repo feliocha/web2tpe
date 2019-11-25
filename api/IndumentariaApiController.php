@@ -33,7 +33,7 @@ class IndumentariaApiController extends ApiController{
         if ($comentarios) {
             $this->view->response($comentarios, 200);   
         } else {
-            $this->view->response("No existe", 404);
+            $this->view->response("No existe", 200);
         }
     }
 

@@ -86,7 +86,8 @@ class usercontroller {
         }else {
             $usuarioname = "invitado";
         }
-       
+
+        
         $mfindumentaria = $this->modelindumentaria->getarticulo($id_articulo);
         $this->view->mostrararticuloguest($mfindumentaria,$usuario,$usuarioname);
     }
