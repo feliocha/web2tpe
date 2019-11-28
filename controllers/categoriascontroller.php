@@ -1,7 +1,7 @@
 <?php
-    require_once "C:/xampp/htdocs/proyectos/mfindumentaria/models/indumentariamodel.php";
-    require_once "C:/xampp/htdocs/proyectos/mfindumentaria/models/categoriasmodel.php";
-    require_once "C:/xampp/htdocs/proyectos/mfindumentaria/Views/indumentariaview.php";
+    require_once "./models/indumentariamodel.php";
+    require_once "./models/categoriasmodel.php";
+    require_once "./Views/indumentariaview.php";
 
 
     class categoriascontroller {

@@ -87,9 +87,9 @@ class usercontroller {
             $usuarioname = "invitado";
         }
 
-        
+        $imagenes = $this->modelindumentaria->getimagenesart($id_articulo);
         $mfindumentaria = $this->modelindumentaria->getarticulo($id_articulo);
-        $this->view->mostrararticuloguest($mfindumentaria,$usuario,$usuarioname);
+        $this->view->mostrararticuloguest($mfindumentaria,$usuario,$usuarioname,$imagenes);
     }
 
     public function mostrarcategoriaguest($id_categoria){

@@ -15,7 +15,7 @@ class IndumentariaApiController extends ApiController{
     public function getcomentarios($params = null) {
         $comentarios = $this->modelcomentarios->getcomentarios();
         $this->view->response($comentarios, 200);
-    } 
+    }
     
     public function getcomentariospromedio($params = null) {
         $id = $params[':ID'];
@@ -24,6 +24,7 @@ class IndumentariaApiController extends ApiController{
         $this->view->response($promedio, 200);
     }
     
+
     public function getcomentariosart($params = null) {
         // obtiene el parametro de la ruta
         $id = $params[':ID'];
@@ -39,7 +40,6 @@ class IndumentariaApiController extends ApiController{
 
     public function insertarcomentario($params = []) {     
         $body = $this->getData();
-
         // inserta la tarea
         $id_articulo = $body->id_articulo;
         $usuario = $body->usuario;
@@ -50,9 +50,9 @@ class IndumentariaApiController extends ApiController{
 
     public function borrarcomentario($params = []) {
         $id = $params[':ID'];
-                    //traer un comentario y chekear
-            $this->modelcomentarios->borrarcomentario($id);
-            $this->view->response("comentario=$id eliminado con éxito", 200);
+        //traer un comentario y chekear
+        $this->modelcomentarios->borrarcomentario($id);
+        $this->view->response("comentario=$id eliminado con éxito", 200);
     }
 
     /**

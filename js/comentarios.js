@@ -16,6 +16,7 @@ let app = new Vue({
       }
 });
 
+
 function getcomentarios() {
     if (adm == 1) {
       app.adm= true;  
@@ -29,6 +30,7 @@ function getcomentarios() {
             getpromedio();
 
         }
+    getimagenes();
     })
     .catch(error => console.log(error));
 }
@@ -50,6 +52,7 @@ async function deleteComentario(id) {
     }
    
 }
+
 
 
 function addcomentario(e) {
@@ -88,6 +91,6 @@ function getpromedio() {
 }
 
 
-
 getpromedio();
 getcomentarios();
+getimagenes();

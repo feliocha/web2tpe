@@ -36,14 +36,14 @@ class indumentariamodel {
         $sentencia = $this->db->prepare("INSERT INTO articulos(nombre,precio,id_categoria) VALUES(?,?,?)");
         $sentencia->execute(array($nombre,$precio,$categoria));
         $id_articulo = $this->db->lastInsertId();
-        $rutas = $this->subirImagenes($rutatemporal);
+        $rutas = $this->createpaths($rutatemporal);
         $sentenciaimg = $this->db->prepare("INSERT INTO imagenes(id_articulo,path) VALUES(?,?)");
         foreach ($rutas as $ruta) {
             $sentenciaimg->execute(array($id_articulo,$ruta));
         }
     }
 
-    private function subirImagenes($imagenes){
+    private function createpaths($imagenes){
         $rutas = [];
         foreach ($imagenes as $imagen) {
           $destino_final = 'img/articulos/' . uniqid() . '.jpg';
@@ -52,20 +52,17 @@ class indumentariamodel {
         }
         return $rutas;
       }
-    
 
-    
-    private function moveFile($imagen) {
-        $filepath = "img/articulos/" . uniqid() . "." . strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));  
-        move_uploaded_file($imagen['tmp_name'], $filepath);
-        return $filepath;
-    }
-
-    public function getimg($id_articulo){
+    public function getimagenesart($id_articulo){
         $sentencia = $this->db->prepare("SELECT * FROM imagenes WHERE id_articulo=?");
         $sentencia->execute(array($id_articulo));
         $imagenes = $sentencia->fetchAll(PDO::FETCH_OBJ);
         return $imagenes;
+    }
+
+    public function borrarimagen($id_imagen){
+        $sentencia = $this->db->prepare("DELETE FROM imagenes WHERE id_imagen=?");
+        $sentencia->execute(array($id_imagen));
     }
 
     public function borrararticulo($id_articulo){

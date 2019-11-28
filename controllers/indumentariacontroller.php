@@ -1,7 +1,7 @@
 <?php
-    require_once "C:/xampp/htdocs/proyectos/mfindumentaria/models/indumentariamodel.php";
-    require_once "C:/xampp/htdocs/proyectos/mfindumentaria/models/categoriasmodel.php";
-    require_once "C:/xampp/htdocs/proyectos/mfindumentaria/Views/indumentariaview.php";
+    require_once "./models/indumentariamodel.php";
+    require_once "./models/categoriasmodel.php";
+    require_once "./Views/indumentariaview.php";
 
     
     class mfindumentariacontroller {
@@ -43,7 +43,7 @@
         public function getarticulo($id_articulo){
             $this->checkLogIn();
             $user= $_SESSION['adm'];
-            $imagenes = $this->modelindumentaria->getimg($id_articulo);
+            $imagenes = $this->modelindumentaria->getimagenesart($id_articulo);
             $mfindumentaria = $this->modelindumentaria->getarticulo($id_articulo);
             $this->view->displayarticulo($user,$mfindumentaria,$imagenes);
         }
@@ -51,13 +51,15 @@
         public function insertararticulo(){
             $this->checkLogIn();
             $rutatempimagenes = $_FILES['imagenes']['tmp_name'];
-            $this->modelindumentaria->insertararticulo($_POST['nombre'], $_POST['precio'], $_POST['categoria'], $rutatempimagenes);    
+            if ($this->tipoimgcorrecto($_FILES['imagenes']['type'])) {
+                $this->modelindumentaria->insertararticulo($_POST['nombre'], $_POST['precio'], $_POST['categoria'], $rutatempimagenes);    
+            }
             header("Location: " . BASE_URL);
         }
         
         private function tipoimgcorrecto($imagenesTipos){
             foreach ($imagenesTipos as $tipo) {
-              if($tipo != 'image/jpeg') {
+              if($tipo != ('image/jpeg' || 'image/jpg' || 'image/png')) {
                 return false;
               }
             }

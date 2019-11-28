@@ -32,13 +32,14 @@ class userview {
         $smarty->display('templates/register.tpl');
     }
 
-    public function mostrararticuloguest($mfindumentaria,$usuario,$usuarioname){
+    public function mostrararticuloguest($mfindumentaria,$usuario,$usuarioname,$imagenes){
         $smarty = new Smarty();
         $smarty->assign('titulo',"mfindumentaria");
         $smarty->assign('BASE_URL',BASE_URL);
         $smarty->assign('articulo',$mfindumentaria);
         $smarty->assign('user',$usuario);
         $smarty->assign('nombreusuario',$usuarioname);
+        $smarty->assign('imagenes',$imagenes);
         $smarty->display('templates/showarticuloinvitado.tpl');
     }
 

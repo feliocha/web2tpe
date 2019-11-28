@@ -22,7 +22,8 @@ $router->addRoute("articulos/:ID", "PUT", "IndumentariaApiController", "modifica
 $router->addRoute("comentarios", "POST", "IndumentariaApiController", "insertarcomentario");
 $router->addRoute("comentarios/:ID", "GET", "IndumentariaApiController", "getcomentariosart");
 $router->addRoute("comentarios/:ID", "DELETE", "IndumentariaApiController", "borrarcomentario");
-$router->addRoute("comentarios/promedio/:ID", "GET", "IndumentariaApiController", "getcomentariospromedio"); //de todo pero hay que hacer el group by  (comentarios por articulos)
+$router->addRoute("comentarios/promedio/:ID", "GET", "IndumentariaApiController", "getcomentariospromedio");
+//de todo pero hay que hacer el group by  (comentarios por articulos)
 
 // rutea
 $router->route($resource, $method);

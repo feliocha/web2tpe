@@ -6,13 +6,10 @@
 
                     <li>Precio: ${$articulo->precio}</li>
 
-                    {if {$user} eq 0}
-                    podes agregar comentarios (sos usuario normal)
-                    {/if}
 
-                    {if {$user} eq 3}
-                    sos invitado no podes agregar nada                      
-                    {/if}
+                            {foreach from=$imagenes item=img}
+            <img src="{$img->path}" alt="" height="15%" width="15%">
+        {/foreach}
                     
                     <div id=divcomentarios data-adm={$user} data-user={$nombreusuario} data-id={$articulo->id_articulo}>  
                         

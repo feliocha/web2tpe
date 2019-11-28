@@ -5,7 +5,7 @@
         <p>el promedio es: {{promedio}}</p>
        <li v-for="comentario in comentarios">
 
-           <span> {{ comentario.usuario }} -{{ comentario.texto }}- {{comentario.calificacion}} "el id comentario es:" {{ comentario.id_comentario }}</span> 
+           <span> {{ comentario.usuario }} :{{ comentario.texto }} - calificacion: {{comentario.calificacion}} </span> 
         <button v-if="adm" type="button" v-on:click="borrarComentario(comentario.id_comentario)">borrar</button>
        </li> 
     </ul>
