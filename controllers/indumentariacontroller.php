@@ -77,6 +77,13 @@
             $this->checkLogIn();
             $this->modelindumentaria->modificararticulo($_POST['nombremodificado'],$_POST['preciomodificado'],$id_articulo);
             header("Location: " . BASE_URL);
-        
+        }
+
+        public function borrarimg($id_imagen){
+            $this->checkLogin();
+            $rutalocal = $this->modelindumentaria->rutaimglocal($id_imagen);
+            unlink($rutalocal->path);
+            $this->modelindumentaria->borrarimg($id_imagen);
+            header("Location: " . BASE_URL); //poner ruta de art
         }
     }

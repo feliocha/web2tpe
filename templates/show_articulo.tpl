@@ -9,6 +9,7 @@
         
         {foreach from=$imagenes item=img}
             <img src="{$img->path}" alt="" height="15%" width="15%">
+            <a href='borrarimg/{$img->id_imagen}'>borrar</a>
         {/foreach}
         
         <div id=divcomentarios data-adm={$user} data-id={$articulo->id_articulo}>  
