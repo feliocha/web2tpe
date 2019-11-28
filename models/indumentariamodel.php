@@ -32,13 +32,27 @@ class indumentariamodel {
         return $articulos;
     }
 
-    public function insertararticulo($nombre,$precio,$categoria,$imagen=null){
-        $filepath = null;
-        if ($imagen)
-            $filepath = $this->moveFile($imagen);
-        $sentencia = $this->db->prepare("INSERT INTO articulos(nombre,precio,id_categoria) VALUES(?,?,?); set @last_id_in_articulos=LAST_INSERT_ID(); INSERT INTO imagenes(id_articulo, path) VALUES(@last_id_in_articulos,?)");
-        $sentencia->execute(array($nombre,$precio,$categoria,$filepath));
+    public function insertararticulo($nombre,$precio,$categoria,$rutatemporal){
+        $sentencia = $this->db->prepare("INSERT INTO articulos(nombre,precio,id_categoria) VALUES(?,?,?)");
+        $sentencia->execute(array($nombre,$precio,$categoria));
+        $id_articulo = $this->db->lastInsertId();
+        $rutas = $this->subirImagenes($rutatemporal);
+        $sentenciaimg = $this->db->prepare("INSERT INTO imagenes(id_articulo,path) VALUES(?,?)");
+        foreach ($rutas as $ruta) {
+            $sentenciaimg->execute(array($id_articulo,$ruta));
+        }
     }
+
+    private function subirImagenes($imagenes){
+        $rutas = [];
+        foreach ($imagenes as $imagen) {
+          $destino_final = 'img/articulos/' . uniqid() . '.jpg';
+          move_uploaded_file($imagen, $destino_final);
+          $rutas[]=$destino_final;
+        }
+        return $rutas;
+      }
+    
 
     
     private function moveFile($imagen) {

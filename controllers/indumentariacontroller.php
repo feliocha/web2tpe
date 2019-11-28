@@ -50,22 +50,21 @@
 
         public function insertararticulo(){
             $this->checkLogIn();
-            if ($_FILES['imagen']['name']) {
-                if ($_FILES['imagen']['type'] == "image/jpeg" || $_FILES['imagen']['type'] == "image/jpg" || $_FILES['imagen']['type'] == "image/png") {
-                    $this->modelindumentaria->insertararticulo($_POST['nombre'], $_POST['precio'], $_POST['categoria'], $_FILES['imagen']);
-                }
-                else {
-                    $error = "Formato no aceptado";
-                    var_dump($error);
-                    die();
-                }
-            }
-            else {
-                $this->modelindumentaria->insertararticulo($_POST['nombre'], $_POST['precio'], $_POST['categoria']);
-            }
+            $rutatempimagenes = $_FILES['imagenes']['tmp_name'];
+            $this->modelindumentaria->insertararticulo($_POST['nombre'], $_POST['precio'], $_POST['categoria'], $rutatempimagenes);    
             header("Location: " . BASE_URL);
         }
         
+        private function tipoimgcorrecto($imagenesTipos){
+            foreach ($imagenesTipos as $tipo) {
+              if($tipo != 'image/jpeg') {
+                return false;
+              }
+            }
+            return true;
+        }
+      
+
         public function borrararticulo($id_articulo){
             $this->checkLogIn();
             $this->modelindumentaria->borrararticulo($id_articulo);
