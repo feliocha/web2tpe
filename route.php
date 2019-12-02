@@ -84,6 +84,9 @@
             if($partesURL[0] == "borrarimg"){
                 $controller->borrarimg($partesURL[1]);
             }
+            if($partesURL[0] == "agregarnuevaimg"){
+                $controller->agregarnuevaimg($partesURL[1]);
+            }
 
         }
     }

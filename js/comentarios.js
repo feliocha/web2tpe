@@ -21,7 +21,7 @@ function getcomentarios() {
     if (adm == 1) {
       app.adm= true;  
     } 
-    fetch("http://localhost/proyectos/mfindumentaria/api/comentarios/" + articulo)
+    fetch("api/comentarios/" + articulo)
     .then(response => response.json())
     .then(comentarios=> {
         
@@ -42,7 +42,7 @@ if (adm != 1) {
 async function deleteComentario(id) {
     
     try{   
-        let r= await fetch("http://localhost/proyectos/mfindumentaria/api/comentarios/" + id,  {'method': 'DELETE'});
+        let r= await fetch("api/comentarios/" + id,  {'method': 'DELETE'});
         let r2= await r.json();
         getcomentarios();
 
@@ -57,13 +57,17 @@ async function deleteComentario(id) {
 
 function addcomentario(e) {
     e.preventDefault();
+    let texto = document.querySelector("input[name=texto]").value;
+    let calificacion = document.querySelector("input[name=calificacion]").value
     
+    if (!(texto == "") && !(calificacion=="")){
     let data = {
         id_articulo: articulo,
         usuario: usuario,
-        texto:  document.querySelector("input[name=texto]").value,
-        calificacion:  document.querySelector("input[name=calificacion]").value
+        texto:  texto,
+        calificacion:  calificacion
     }
+    
 
     fetch('api/comentarios', {
         method: 'POST',
@@ -78,11 +82,14 @@ function addcomentario(e) {
          document.querySelector("input[name=calificacion]").value = '';
      })
      .catch(error => console.log(error));
+    }else {
+        alert("faltando datos");
+    }
 
 }
 
 function getpromedio() {
-    fetch("http://localhost/proyectos/mfindumentaria/api/comentarios/promedio/" + articulo)
+    fetch("api/comentarios/promedio/" + articulo)
     .then(response => response.json())
     .then(promedio=> {
         app.promedio= promedio;

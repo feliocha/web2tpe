@@ -7,10 +7,7 @@ require_once("./api/JSONView.php");
 
 class IndumentariaApiController extends ApiController{
     
-    public function getindumentaria($params = null) {
-        $mfindumentaria = $this->modelindumentaria->getarticulos();
-        $this->view->response($mfindumentaria, 200);
-    }
+    //COMENTARIOS
     
     public function getcomentarios($params = null) {
         $comentarios = $this->modelcomentarios->getcomentarios();
@@ -26,7 +23,7 @@ class IndumentariaApiController extends ApiController{
     
 
     public function getcomentariosart($params = null) {
-        // obtiene el parametro de la ruta
+        
         $id = $params[':ID'];
         
         $comentarios = $this->modelcomentarios->getcomentariosart($id);
@@ -37,7 +34,7 @@ class IndumentariaApiController extends ApiController{
             $this->view->response("No existe", 200);
         }
     }
-
+    
     public function insertarcomentario($params = []) {     
         $body = $this->getData();
         // inserta la tarea
@@ -55,13 +52,14 @@ class IndumentariaApiController extends ApiController{
         $this->view->response("comentario=$id eliminado con éxito", 200);
     }
 
-    /**
-     * Obtiene una tarea dado un ID
-     * 
-     * $params arreglo asociativo con los parámetros del recurso
-     */
+    //ARTICULOS
+    public function getindumentaria($params = null) {
+        $mfindumentaria = $this->modelindumentaria->getarticulos();
+        $this->view->response($mfindumentaria, 200);
+    }
+    
     public function getarticulo($params = null) {
-        // obtiene el parametro de la ruta
+        
         $id = $params[':ID'];
         
         $articulo = $this->modelindumentaria->getarticulo($id);
@@ -73,7 +71,7 @@ class IndumentariaApiController extends ApiController{
         }
     }
 
-    // TareasApiController.php
+    
     public function borrararticulo($params = []) {
         $id = $params[':ID'];
         $articulo = $this->modelindumentaria->getarticulo($id);
@@ -86,7 +84,7 @@ class IndumentariaApiController extends ApiController{
             $this->view->response("articulo id=$_id not found", 404);
     }
 
-    // TareaApiController.php
+    
    public function insertararticulo($params = []) {     
         $body = $this->getData();
 
@@ -97,7 +95,6 @@ class IndumentariaApiController extends ApiController{
         $articulo = $this->modelindumentaria->insertararticulo($nombre,$precio,$categoria);
     }
 
-    // TaskApiController.php
     public function actualizararticulo($params = []) {
         $id = $params[':ID'];
         $articulo = $this->modelindumentaria->getarticulo($id);

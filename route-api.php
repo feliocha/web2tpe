@@ -20,9 +20,9 @@ $router->addRoute("articulos/:ID", "DELETE", "IndumentariaApiController", "borra
 $router->addRoute("articulos", "POST", "IndumentariaApiController", "insertararticulo");
 $router->addRoute("articulos/:ID", "PUT", "IndumentariaApiController", "modificararticulo");
 $router->addRoute("comentarios", "POST", "IndumentariaApiController", "insertarcomentario");
-$router->addRoute("comentarios/:ID", "GET", "IndumentariaApiController", "getcomentariosart");
+$router->addRoute("comentarios/:ID", "GET", "IndumentariaApiController", "getcomentariosart");  /*al cambiar por /articulos/:ID/comentarios deja de andar el fetch */
 $router->addRoute("comentarios/:ID", "DELETE", "IndumentariaApiController", "borrarcomentario");
-$router->addRoute("comentarios/promedio/:ID", "GET", "IndumentariaApiController", "getcomentariospromedio");
+$router->addRoute("comentarios/promedio/:ID", "GET", "IndumentariaApiController", "getcomentariospromedio"); /*al cambiar por /articulos/:ID/comentarios/promedio deja de andar el fetch */
 //de todo pero hay que hacer el group by  (comentarios por articulos)
 
 // rutea

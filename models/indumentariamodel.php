@@ -16,7 +16,6 @@ class indumentariamodel {
     }
 
     public function getarticulo($id_articulo){
-        //hay que poner el JOIN para poner el nombre de la categoria al lado de cada articulo
         $sentencia = $this->db->prepare("SELECT * FROM articulos WHERE id_articulo=?");
         $sentencia->execute(array($id_articulo));
         $articulo = $sentencia->fetch(PDO::FETCH_OBJ);
@@ -32,27 +31,15 @@ class indumentariamodel {
         return $articulos;
     }
 
-    public function insertararticulo($nombre,$precio,$categoria,$rutatemporal){
+    public function insertararticulo($nombre,$precio,$categoria){
+        
         $sentencia = $this->db->prepare("INSERT INTO articulos(nombre,precio,id_categoria) VALUES(?,?,?)");
         $sentencia->execute(array($nombre,$precio,$categoria));
         $id_articulo = $this->db->lastInsertId();
-        $rutas = $this->createpaths($rutatemporal);
-        $sentenciaimg = $this->db->prepare("INSERT INTO imagenes(id_articulo,path) VALUES(?,?)");
-        foreach ($rutas as $ruta) {
-            $sentenciaimg->execute(array($id_articulo,$ruta));
-        }
+        
+        return $id_articulo;
     }
-
-    private function createpaths($imagenes){
-        $rutas = [];
-        foreach ($imagenes as $imagen) {
-          $destino_final = 'img/articulos/' . uniqid() . '.jpg';
-          move_uploaded_file($imagen, $destino_final);
-          $rutas[]=$destino_final;
-        }
-        return $rutas;
-      }
-
+   
     public function borrararticulo($id_articulo){
         $sentencia = $this->db->prepare("DELETE FROM articulos WHERE id_articulo=?");
         $sentencia->execute(array($id_articulo));
@@ -64,8 +51,15 @@ class indumentariamodel {
     }
 
 //imagenes
+public function insertarimg($rutatemporal,$id_articulo){
+    $rutas = $this->createpaths($rutatemporal);
+    $sentencia = $this->db->prepare("INSERT INTO imagenes(id_articulo,path) VALUES (?,?)");
+    foreach ($rutas as $ruta){
+        $sentencia->execute(array($id_articulo,$ruta));
+    }
+}
 
-    public function getimagenesart($id_articulo){
+public function getimagenesart($id_articulo){
         $sentencia = $this->db->prepare("SELECT * FROM imagenes WHERE id_articulo=?");
         $sentencia->execute(array($id_articulo));
         $imagenes = $sentencia->fetchAll(PDO::FETCH_OBJ);
@@ -76,12 +70,21 @@ class indumentariamodel {
         $sentencia = $this->db->prepare("DELETE FROM imagenes WHERE id_imagen=?");
         $sentencia->execute(array($id_imagen));
     }
-
+    
     public function rutaimglocal($id_imagen){
         $sentencia = $this->db->prepare("SELECT imagenes.path FROM imagenes WHERE id_imagen=?");
         $sentencia->execute(array($id_imagen));
         $ruta = $sentencia->fetch(PDO::FETCH_OBJ);
         return $ruta;
-        
+    }
+    
+    private function createpaths($imagenes){
+        $rutas = [];
+        foreach ($imagenes as $imagen) {
+          $destino_final = 'img/articulos/' . uniqid() . '.jpg';
+          move_uploaded_file($imagen, $destino_final);
+          $rutas[]=$destino_final;
+        }
+        return $rutas;
     }
 }

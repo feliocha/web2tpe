@@ -18,7 +18,7 @@
                         
                         <form id="form-comentario" action="insertar" method="post">
                             <input type="text" name="texto" placeholder="escriba aqui">
-                            <input type="number" name="calificacion"  max="10">
+                            <input type="number" name="calificacion"  min="1" max="5">
                             <input type="submit" value="Insertar">
                         </form>
                     

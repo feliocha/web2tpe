@@ -28,11 +28,14 @@
             precio:<input type="number" name="preciomodificado" max="30000" value="{$articulo->precio}">
             <input type="submit" value="Modificar Articulo">
         </form>
+
+        <form action="agregarnuevaimg/{$articulo->id_articulo}" method="post" enctype="multipart/form-data">
+            Agregar nuevas imagenes a este articulo: 
+            <input type="file" name="imagenes[]" id="imagenes" multiple>
+            <input type="submit" value="Agregar imagenes">
+        </form>
   
 
-
-        agregar img 
-        
 
        <script src="js/comentarios.js"></script> 
 {include file="footer.tpl"}

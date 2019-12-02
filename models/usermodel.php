@@ -8,13 +8,13 @@ class UserModel {
         $this->db = new PDO('mysql:host=localhost;'.'dbname=mfindumentaria;charset=utf8', 'root', '');
     }
 
-    public function GetPassword($user){
+    public function getuserdata($user){
         $sentencia = $this->db->prepare( "SELECT * FROM usuarios WHERE email = ?");
         $sentencia->execute(array($user));
         
-        $password = $sentencia->fetch(PDO::FETCH_OBJ);
+        $datosuser = $sentencia->fetch(PDO::FETCH_OBJ);
         
-        return $password;
+        return $datosuser;
     }
     
     public function Registrar($user,$pass,$adm){
